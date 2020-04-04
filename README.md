@@ -14,7 +14,7 @@ Currently such features are heavily dependent on [PyTorch](https://pytorch.org/)
 It's not on PyPI yet, means you need to install the package using the `pip` and `git`
 
 ```console
-$ pip install -e blahblah
+$ pip install git+https://github.com/eldrin/factormach.git@master
 ```
 
 ### Quick Look
@@ -23,7 +23,23 @@ Basic usage is similar to the scikit-learn
 
 ```python
 
-blah blah
+import numpy as np
+from factormach.models.uifm import UserItemFM
+from factormach.utils import load_triplet_csv
+
+# load interaction data
+user_item = load_triplet_csv('/path/to/triplets.txt')
+item_feat = np.load('/path/to/item_features.npy')
+
+# initialize user-item fm
+fm = UserItemFM(k=32, n_iters=20, loss='bce')
+
+# train
+fm.fit(
+  user_item,
+  item_feature=item_feat,
+  batch_sz=512
+)
 
 ```
 
